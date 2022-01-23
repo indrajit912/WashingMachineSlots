@@ -20,10 +20,10 @@ FRONT = r"""
 	
 	\hline
 	
-	\multicolumn{4}{|c|}{\textbf{Washing Machine Slots}} \\
+	\multicolumn{4}{|c|}{\textbf{\Large Washing Machine Slots}} \\
 	\hline
 	
-	Date & 7:00am-11:00am & 2:00pm-6:00pm & 9:00pm-1:00am \\
+	\textbf{Date} & \textbf{7:00am-11:00am} & \textbf{2:00pm-6:00pm} & \textbf{9:00pm-1:00am} \\
 	\hline
 
 """

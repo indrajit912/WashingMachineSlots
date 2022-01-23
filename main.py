@@ -1,4 +1,4 @@
-# WashingMachine - A python script to create a tex file which can generate 
+# WashingMachineSlots - A python script to create a .tex file which can generate 
 # a washing machine slots table.
 #
 # Author: Indrajit Ghosh
@@ -6,9 +6,20 @@
 # Date: Jan 23, 2022
 #
 
+INDRAJIT = r"\textit{Indrajit (RF-8)}"
+INDRAJITS_CHOICE = 6 # Sunday
+
+RENU = r"\textit{Renu (RF-2)}"
+RENUS_CHOICE = 5 # Saturday
+
 
 from datetime import datetime, timedelta
 from wash_tex_templates import FRONT, BACK
+from pathlib import Path
+import os
+
+HOME = Path.home()
+DESKTOP = HOME / 'Desktop/'
 
 def iter_days(year, month):
     dt = datetime(year, month, 1)
@@ -23,14 +34,27 @@ def get_table_text(year, month):
 
     for dt in iter_days(year, month):
         date = dt.strftime('%b %-d, 2022')
-        text = date + r" & & & \\" + "\n" + r"\hline" + "\n"
+
+        # Monday = 0, ..., Sunday = 6
+        if dt.weekday() == INDRAJITS_CHOICE:
+            # Indrajit's slot
+            text = date + "&" + INDRAJIT +  r" & & \\" + "\n" + r"\hline" + "\n"
+
+        elif dt.weekday() == RENUS_CHOICE:
+            # Renu's slot
+            text = date + "&" + RENU +  r" & & \\" + "\n" + r"\hline" + "\n"
+
+        else:
+            text = date + r" & & & \\" + "\n" + r"\hline" + "\n"
+            
         s += text
 
     return s
 
 
-def create_slots_tex(year, month):
-    with open('tests/wash_slots.tex', 'w') as f:
+def create_slots_tex(year, month, dir, filename):
+
+    with open(dir / filename, 'w') as f:
         f.write(FRONT)
 
         f.write(get_table_text(year, month))
@@ -44,10 +68,17 @@ def main():
     YEAR = 2022
     MONTH = int(input("Enter the month code (e.g. 1 for Jan): "))
 
-    create_slots_tex(YEAR, MONTH)
+    tex_filename = "wash_slot_" + datetime(YEAR, MONTH, 1).strftime('%b_%y') + ".tex"
 
-    print(f"\nThe .tex file has been created!\n")
-    
+    output_dir = DESKTOP / f"wash_slots_{datetime(YEAR, MONTH, 1).strftime('%b_%y')}"
+    try:
+        os.makedirs(output_dir)
+        create_slots_tex(YEAR, MONTH, output_dir, tex_filename)
+        print(f"\nThe .tex file has been created on your desktop!\n")
+
+    except FileExistsError:
+        print(f"There is already a directory with the name ``{output_dir.name}``. Delete that directory first and try again later!")
+
 
 
 if __name__ == '__main__':
