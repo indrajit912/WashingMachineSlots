@@ -16,7 +16,7 @@ RENUS_CHOICE = 5 # Saturday
 from datetime import datetime, timedelta
 from wash_tex_templates import FRONT, BACK
 from pathlib import Path
-import os
+import os, subprocess
 
 HOME = Path.home()
 DESKTOP = HOME / 'Desktop/'
@@ -74,7 +74,9 @@ def main():
     try:
         os.makedirs(output_dir)
         create_slots_tex(YEAR, MONTH, output_dir, tex_filename)
-        print(f"\nThe .tex file has been created on your desktop!\n")
+        os.chdir(output_dir)
+        subprocess.run(["pdflatex", tex_filename])
+        print(f"\nThe .pdf has been created inside: ```{output_dir}```\n")
 
     except FileExistsError:
         print(f"There is already a directory with the name ``{output_dir.name}``. Delete that directory first and try again later!")
