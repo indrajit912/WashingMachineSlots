@@ -15,8 +15,8 @@ RENUS_CHOICE = 5 # Saturday
 GOPALJI = r"\textit{Gopalji (RF-3)}"
 GOPALJIS_CHOICE = 5 # Saturday
 
-DHANASHREE = r"\textit{Dhanashree (RFE-2)}"
-DHANASHREES_CHOICE = 5 # Saturday
+DHANASRI = r"\textit{Dhanasri (RFE-2)}"
+DHANASRIS_CHOICE = 5 # Saturday
 
 
 
@@ -49,7 +49,7 @@ def get_table_text(year, month):
 
         elif dt.weekday() == GOPALJIS_CHOICE:
             # Renu's slot
-            text = date + "&" + GOPALJI +  "&" + DHANASHREE + r" & \\" + "\n" + r"\hline" + "\n"
+            text = date + "&" + GOPALJI +  "&" + DHANASRI + r" & \\" + "\n" + r"\hline" + "\n"
 
         else:
             text = date + r" & & & \\" + "\n" + r"\hline" + "\n"
