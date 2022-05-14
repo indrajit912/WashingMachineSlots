@@ -70,7 +70,7 @@ def create_slots_tex(year, month, dir, filename):
 
 
 
-def main():
+def generate_slots():
 
     YEAR = 2022
     MONTH = int(input("Enter the month code (e.g. 1 for Jan): "))
@@ -88,6 +88,10 @@ def main():
     except FileExistsError:
         print(f"There is already a directory with the name ``{output_dir.name}``. Delete that directory first and try again later!")
 
+
+def main():
+    
+    generate_slots()
 
 
 if __name__ == '__main__':
