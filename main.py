@@ -12,6 +12,13 @@ INDRAJITS_CHOICE = 6 # Sunday
 RENU = r"\textit{Renu (RF-2)}"
 RENUS_CHOICE = 5 # Saturday
 
+GOPALJI = r"\textit{Gopalji (RF-3)}"
+GOPALJIS_CHOICE = 5 # Saturday
+
+DHANASHREE = r"\textit{Dhanashree (RFE-2)}"
+DHANASHREES_CHOICE = 5 # Saturday
+
+
 
 from datetime import datetime, timedelta
 from wash_tex_templates import FRONT, BACK
@@ -40,9 +47,9 @@ def get_table_text(year, month):
             # Indrajit's slot
             text = date + "&" + INDRAJIT +  r" & & \\" + "\n" + r"\hline" + "\n"
 
-        elif dt.weekday() == RENUS_CHOICE:
+        elif dt.weekday() == GOPALJIS_CHOICE:
             # Renu's slot
-            text = date + "&" + RENU +  r" & & \\" + "\n" + r"\hline" + "\n"
+            text = date + "&" + GOPALJI +  "&" + DHANASHREE + r" & \\" + "\n" + r"\hline" + "\n"
 
         else:
             text = date + r" & & & \\" + "\n" + r"\hline" + "\n"
