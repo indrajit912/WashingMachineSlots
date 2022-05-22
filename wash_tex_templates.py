@@ -4,6 +4,16 @@ FRONT = r"""
 \usepackage[utf8]{inputenc}
 \usepackage[top=0.7 in,bottom=1in, left=0.4 in, right=1 in]{geometry}
 
+\usepackage{hyperref}
+\hypersetup{
+	pdftitle={Washing Machine Slots for RS Hostel, ISIBc},
+	pdfauthor={Indrajit Ghosh},
+	pdfsubject={Washing Machine},
+	pdfcreationdate={\today},
+	pdfcreator={MikTex},
+	pdfkeywords={ISI},
+}
+
 
 \setlength{\arrayrulewidth}{0.5mm}
 \setlength{\tabcolsep}{18pt}
