@@ -15,7 +15,7 @@ RENUS_CHOICE = 5 # Saturday
 GOPALJI = r"\textit{Gopalji (RF-3)}"
 GOPALJIS_CHOICE = 5 # Saturday
 
-DHANASRI = r"\textit{Dhanasri (RSE-2)}"
+DHANASRI = r"\textit{Dhanasri (RSS-2)}"
 DHANASRIS_CHOICE = 5 # Saturday
 
 
