@@ -62,7 +62,7 @@ def create_slots_tex(year, month, dir, filename):
 
 def generate_slots():
 
-    YEAR = 2022
+    YEAR = 2023
     MONTH = int(input("Enter the month code (e.g. 1 for Jan): "))
 
     tex_filename = "wash_slot_" + datetime(YEAR, MONTH, 1).strftime('%b_%y') + ".tex"
