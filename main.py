@@ -34,7 +34,7 @@ def get_table_text(year, month):
     s = ''
 
     for dt in iter_days(year, month):
-        date = dt.strftime('%b %-d, 2022')
+        date = dt.strftime(f'%b %-d, {year}')
 
         # Monday = 0, ..., Sunday = 6
         if dt.weekday() == INDRAJITS_CHOICE:
