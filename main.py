@@ -19,6 +19,9 @@ import os, sys
 HOME = Path.home()
 DESKTOP = HOME / 'Desktop/'
 
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 def iter_days(year, month):
     dt = datetime(year, month, 1)
     while dt.year == year and dt.month == month:
@@ -62,7 +65,7 @@ def generate_slots(year:int, month:int):
 
     output_dir = DESKTOP / f"wash_slots_{datetime(year, month, 1).strftime('%b_%y')}"
     try:
-        os.system('clear')
+        clear_screen()
 
         os.makedirs(output_dir)
         print("\nTeX directory created.")
@@ -121,6 +124,8 @@ def main():
         sys.exit()
     else:
         y = datetime.now().year if y is None else y
+        
+        clear_screen()
         generate_slots(year=y, month=m)
 
 
