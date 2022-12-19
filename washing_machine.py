@@ -24,6 +24,20 @@ class WashingMachine:
     Author: Indrajit Ghosh
     Created On: Dec 19, 2022
 
+
+    Attributes:
+    -----------
+        `name`: `str`
+        `timings`: `dict`; 
+                    defaults to {
+                                    1: "7:00am-11:00am",
+                                    2: "2:00pm-6:00pm",
+                                    3: "9:00pm-1:00am"
+                                }
+
+        `slots`: `dict`
+                  defaults to None
+
     """
     default_timings = {
         1: "7:00am-11:00am",
@@ -116,8 +130,8 @@ class WashingMachine:
         year = datetime.now().year if year is None else year
         booking_dt = datetime(day=day, month=month, year=year)
 
-        # if booking_dt < datetime.today():
-        #     raise Exception("You cannot book slots in the past!")
+        if booking_dt < datetime.today():
+            raise Exception("You cannot book slots in the past!")
 
         day -= 1
         key = f"{month}-{year}"
@@ -184,7 +198,7 @@ class WashingMachine:
         """
         if not DATABASE_DIR.exists():
             DATABASE_DIR.mkdir()
-            
+
         filepath = DATABASE_DIR / (title + '.json')
         with open(filepath, 'w') as f:
             json_obj = json.dumps(self.serialize(), indent= 4)
