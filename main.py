@@ -65,17 +65,15 @@ def generate_slots(year:int, month:int):
 
     output_dir = DESKTOP / f"wash_slots_{datetime(year, month, 1).strftime('%b_%y')}"
     try:
-        clear_screen()
-
         os.makedirs(output_dir)
-        print("\nTeX directory created.")
+        print("\n - TeX directory created.")
 
         create_slots_tex(year, month, output_dir, tex_filename)
-        print("Main tex file has been written.")
+        print(" - Main tex file has been written.")
 
         os.chdir(output_dir)
         os.system(f"pdflatex {tex_filename} > {os.devnull}")
-        print(f"\nThe `pdf` has been created inside: ```{output_dir}```\n")
+        print(f"\n - The `pdf` has been created inside: ```{output_dir}```\n")
 
     except FileExistsError:
         print(f"There is already a directory with the name ``{output_dir.name}``. Delete that directory first and try again later!")
@@ -117,6 +115,9 @@ def main():
 
         Generate slots for specific month November and year 2025
             python3 main.py -m 11 -y 2025
+    ...........................................................................
+    ...........................................................................
+
     """
 
     if m is None:
@@ -126,6 +127,7 @@ def main():
         y = datetime.now().year if y is None else y
         
         clear_screen()
+        print(USAGE)
         generate_slots(year=y, month=m)
 
 
