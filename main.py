@@ -9,10 +9,6 @@
 INDRAJIT = r"\textit{Indrajit (RF-8)}"
 INDRAJITS_CHOICE = 6 # Sunday
 
-DHANASRI = r"\textit{Dhanasri (RSS-2)}"
-DHANASRIS_CHOICE = 5 # Saturday
-
-
 
 from datetime import datetime, timedelta
 from wash_tex_templates import FRONT, BACK
@@ -60,17 +56,14 @@ def create_slots_tex(year, month, dir, filename):
 
 
 
-def generate_slots():
+def generate_slots(year:int, month:int):
 
-    YEAR = 2023
-    MONTH = int(input("Enter the month code (e.g. 1 for Jan): "))
+    tex_filename = "wash_slot_" + datetime(year, month, 1).strftime('%b_%y') + ".tex"
 
-    tex_filename = "wash_slot_" + datetime(YEAR, MONTH, 1).strftime('%b_%y') + ".tex"
-
-    output_dir = DESKTOP / f"wash_slots_{datetime(YEAR, MONTH, 1).strftime('%b_%y')}"
+    output_dir = DESKTOP / f"wash_slots_{datetime(year, month, 1).strftime('%b_%y')}"
     try:
         os.makedirs(output_dir)
-        create_slots_tex(YEAR, MONTH, output_dir, tex_filename)
+        create_slots_tex(year, month, output_dir, tex_filename)
         os.chdir(output_dir)
         subprocess.run(["pdflatex", tex_filename])
         print(f"\nThe .pdf has been created inside: ```{output_dir}```\n")
@@ -80,8 +73,11 @@ def generate_slots():
 
 
 def main():
+
+    y = 2023
+    m = int(input("Enter the month code (e.g. 1 for Jan): "))
     
-    generate_slots()
+    generate_slots(year=y, month=m)
 
 
 if __name__ == '__main__':
