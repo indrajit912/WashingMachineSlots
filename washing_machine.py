@@ -13,6 +13,8 @@ from pprint import pprint
 
 DATABASE_DIR = Path(__file__).parent.resolve() / "database"
 
+# TODO: Add method to write TeX file corresponding to slot at (month, year)
+
 
 __all__ = ["WashingMachine"]
 
