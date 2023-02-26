@@ -10,6 +10,8 @@
 INDRAJIT = r"\textit{Indrajit (RF-8)}"
 INDRAJITS_CHOICE = 6 # Sunday
 
+SNEHA = r"\textit{Sneha (RF-7)}"
+
 
 from datetime import datetime, timedelta
 from wash_tex_templates import FRONT, BACK
@@ -39,10 +41,10 @@ def get_table_text(year, month):
         # Monday = 0, ..., Sunday = 6
         if dt.weekday() == INDRAJITS_CHOICE:
             # Indrajit's slot
-            text = date + "&" + INDRAJIT +  r" & & \\" + "\n" + r"\hline" + "\n"
+            text = date + "&" + INDRAJIT +  "&" + SNEHA + r" & & \\" + "\n" + r"\hline" + "\n"
 
         else:
-            text = date + r" & & & \\" + "\n" + r"\hline" + "\n"
+            text = date + r" & & & & \\" + "\n" + r"\hline" + "\n"
             
         s += text
 

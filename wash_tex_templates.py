@@ -1,4 +1,6 @@
 FRONT = r"""
+% Author: Indrajit Ghosh
+% Title: Washing Machine Slots
 
 \documentclass[11pt, a4paper]{article}
 \usepackage[utf8]{inputenc}
@@ -22,18 +24,18 @@ FRONT = r"""
 
 
 \begin{document}
-	
 \thispagestyle{empty}
 	
+\centering
 
-\begin{tabular}{ |p{2.7cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|  }
+\begin{tabular}{ |p{2.5cm}|p{2.6cm}|p{2.6cm}|p{2.6cm}|p{2.6cm}|  }
 	
 	\hline
 	
-	\multicolumn{4}{|c|}{\textbf{\Large Washing Machine {\it \large{(BOSCH)}} Slots}} \\
+	\multicolumn{5}{|c|}{\textbf{\Large Washing Machine {\it \large{(BOSCH)}} Slots}} \\
 	\hline
 	
-	\textbf{Date} & \textbf{7:00am-11:00am} & \textbf{2:00pm-6:00pm} & \textbf{9:00pm-1:00am} \\
+	\textbf{Date} & \textbf{07:00-10:30} & \textbf{11:30-15:00} & \textbf{16:00-19:30} & \textbf{20:30-00:00} \\
 	\hline
 
 """
