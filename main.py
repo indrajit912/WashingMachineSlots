@@ -14,7 +14,7 @@ SNEHA = r"\textit{Sneha (RF-7)}"
 
 
 from datetime import datetime, timedelta
-from wash_tex_templates import FRONT, BACK
+from wash_tex_templates import FRONT, BACK, DIAGBOX_STY
 from pathlib import Path
 import os, sys
 
@@ -59,6 +59,18 @@ def create_slots_tex(year, month, dir, filename):
         f.write(get_table_text(year, month))
 
         f.write(BACK)
+
+
+def create_diagbox_sty_file(dir:Path):
+    """
+    This function writes `DIAGBOX_STY` into a file `dir/diagbox.sty`
+
+    Parameter:
+    ----------
+        `dir`: Path; the directory into which `diagbox.sty` will be created
+    """
+    with open(dir / 'diagbox.sty', 'w') as f:
+        f.write(DIAGBOX_STY)
 
 
 def generate_slots(year:int, month:int):
