@@ -13,8 +13,6 @@ from pprint import pprint
 
 DATABASE_DIR = Path(__file__).parent.resolve() / "database"
 
-# TODO: Add method to write TeX file corresponding to slot at (month, year)
-
 
 __all__ = ["WashingMachine"]
 
@@ -317,6 +315,10 @@ class WashingMachine:
         """
         This function creates `main.tex` for washing machine for a given month and year
         """
+        # TODO: if self._slots(year, month) is `None` then add default blank slots to `self`
+        if not self._get_slots(month=month, year=year):
+            raise Exception("No slots")
+            
         desktop = Path.home() / "Desktop/"
         tex_filename = "wash_slot_" + datetime(year, month, 1).strftime('%b_%y') + ".tex"
         output_dir = desktop / f"wash_slots_{datetime(year, month, 1).strftime('%b_%y')}"
@@ -610,7 +612,7 @@ def main():
 
     machine.generate_pdf(
         year=2023,
-        month=3
+        month=4
     )
 
 
