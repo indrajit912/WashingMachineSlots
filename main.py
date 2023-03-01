@@ -85,6 +85,8 @@ def generate_slots(year:int, month:int):
         create_slots_tex(year, month, output_dir, tex_filename)
         print(" - Main tex file has been written.")
 
+        create_diagbox_sty_file(dir=output_dir) # creating `diagbox.sty`
+
         os.chdir(output_dir)
         os.system(f"pdflatex {tex_filename} > {os.devnull}")
         print(f"\n - The `pdf` has been created inside: ```{output_dir}```\n")

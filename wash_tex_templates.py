@@ -5,7 +5,7 @@ FRONT = r"""
 \documentclass[11pt, a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[margin=0.4in]{geometry}
-\usepackage{diagbox} # For diagonal line inside table
+\usepackage{diagbox} % For diagonal line inside table
 
 \usepackage{hyperref}
 \hypersetup{
