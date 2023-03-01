@@ -48,6 +48,7 @@ class WashingMachine:
         4: "20:30-00:00"
     }
 
+
     def __init__(
         self, 
         name:str="RS Hostel Machine", 
@@ -91,7 +92,7 @@ class WashingMachine:
 
     def _get_slots(self, month:int, year:int):
         """
-        Generate a new slots if no slots found in 
+        If there is no slots then returns None 
         """
         k = f"{month}-{year}"
         if k in self._slots.keys():
@@ -223,6 +224,13 @@ class WashingMachine:
         timings = content['timings']
 
         return WashingMachine(name=name, timings=timings, slots=slots)
+    
+
+    def generate_main_tex(self):
+        """
+        This function creates
+        """
+        pass
 
 
 class WashTeX:
