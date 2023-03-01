@@ -8,7 +8,7 @@
 from datetime import datetime, timedelta
 from calendar import monthrange
 from pathlib import Path
-import json
+import json, os
 from pprint import pprint
 
 DATABASE_DIR = Path(__file__).parent.resolve() / "database"
@@ -226,11 +226,133 @@ class WashingMachine:
         return WashingMachine(name=name, timings=timings, slots=slots)
     
 
-    def generate_main_tex(self):
+    def _get_main_tex(
+            self,
+            year,
+            month,
+            table_title:str=None,
+            first_col_heading_1:str=None,
+            first_col_heading_2:str=None,
+            first_col_width:str=None,
+            col_width:str=None,
+            diagbox_width:str=None,
+            diagbox_height:str=None
+    ):
         """
-        This function creates
+        Returns the str to be written on `main.tex` file
         """
-        pass
+        table_title = WashTeX.default_table_title if table_title is None else table_title
+        first_col_heading_1 = WashTeX.default_first_col_heading_1 if first_col_heading_1 is None else first_col_heading_1
+        first_col_heading_2 = WashTeX.default_first_col_heading_2 if first_col_heading_2 is None else first_col_heading_2
+        first_col_width = WashTeX.default_first_col_width if first_col_width is None else first_col_width
+        col_width = WashTeX.default_col_width if col_width is None else col_width
+        diagbox_height = WashTeX.default_diagbox_height if diagbox_height is None else diagbox_height
+        diagbox_width = WashTeX.default_diagbox_width if diagbox_width is None else diagbox_width
+
+        main_tex_str = ""
+        main_tex_str += WashTeX.wash_preamble
+        main_tex_str += "\n\n"
+        main_tex_str += r"""
+\begin{document}
+\thispagestyle{empty}
+	
+\centering
+
+
+        """
+        col_head_str = r"|p{" + col_width + r"}"
+
+        main_tex_str += fr"""
+\begin{{tabular}}{{ |p{{{first_col_width}}}|p{{{col_width}}}|p{{{col_width}}}|p{{{col_width}}}|p{{{col_width}}}|  }}
+    \hline
+	
+	\multicolumn{{5}}{{|c|}}{{\textbf{{ {table_title} }} }} \\
+	\hline
+        """
+
+        timing_str = "".join([r" & \textbf{" + str(v) + r"} " for t, v in self.timings.items()])
+        main_tex_str += fr"\diagbox[width=3.5cm, height=1cm]{{\textbf{{{first_col_heading_1}}}}}{{\textbf{{{first_col_heading_2}}}}} "
+        main_tex_str += timing_str + r"\\" + "\n" + r"\hline" + "\n\n"
+
+        slot_str = ""
+        slots = self._get_slots(month=month, year=year)
+        for dt in self.iter_days(year, month):
+            date = dt.strftime(f'%b %-d, {year}')
+            slot_row = slots[dt.day - 1]
+            cell_text_lst = []
+            for cell_val in slot_row:
+                if cell_val:
+                    cell_text_lst.append(
+                        fr"& \textit{{{cell_val}}}"
+                    )
+                else:
+                    cell_text_lst.append(
+                        fr"&  "
+                    )
+
+            slot_str += date + "".join(cell_text_lst) + r"\\" + "\n" + "\hline" + "\n\n"
+
+        main_tex_str += slot_str
+
+        main_tex_str += r"""
+\end{tabular}
+\end{document}
+
+"""
+        return main_tex_str
+    
+
+    def generate_pdf(
+            self, 
+            year:int, 
+            month:int,
+            table_title:str=None,
+            first_col_heading_1:str=None,
+            first_col_heading_2:str=None,
+            first_col_width:str=None,
+            col_width:str=None,
+            diagbox_width:str=None,
+            diagbox_height:str=None
+    ):
+        """
+        This function creates `main.tex` for washing machine for a given month and year
+        """
+        desktop = Path.home() / "Desktop/"
+        tex_filename = "wash_slot_" + datetime(year, month, 1).strftime('%b_%y') + ".tex"
+        output_dir = desktop / f"wash_slots_{datetime(year, month, 1).strftime('%b_%y')}"
+
+        try:
+            output_dir.mkdir() # creating the output dir
+            print("\n - TeX directory created.")
+
+            # Creating `main.tex` file
+            with open(output_dir / tex_filename, 'w') as f:
+                f.write(
+                    self._get_main_tex(
+                    year=year,
+                    month=month,
+                    table_title=table_title,
+                    first_col_heading_1=first_col_heading_1,
+                    first_col_heading_2=first_col_heading_2,
+                    first_col_width=first_col_width,
+                    col_width=col_width,
+                    diagbox_width=diagbox_width,
+                    diagbox_height=diagbox_height
+                    )
+                )
+            print(" - Main tex file has been written.")
+
+            # Creating `diagbox.sty`
+            with open(output_dir / 'diagbox.sty', 'w') as f:
+                f.write(WashTeX.diagbox_sty)
+            
+            os.chdir(output_dir)
+            os.system(f"pdflatex {tex_filename} > {os.devnull}")
+            print(f"\n - The `pdf` has been created inside: ```{output_dir}```\n")
+
+        except FileExistsError:
+            print(f"There is already a directory with the name ``{output_dir.name}``. Delete that directory first and try again later!")
+
 
 
 class WashTeX:
@@ -483,10 +605,13 @@ def main():
     # machine = WashingMachine.load(DATABASE_DIR / "rs_hostel.json")
     machine = WashingMachine(name="New Machine")
     machine.add_blank_slots(month=3)
-    print(machine.slots)
-    print(machine.book_slot(day=2, month=3, timing=1, entry="Indrajit (RF-8)"))
-    print(machine.book_slot(day=2, month=3, timing=1, entry="Sneha (RF-7)"))
+    machine.book_slot(day=5, month=3, timing=1, entry="Indrajit (RF-8)")
     pprint(machine.slots)
+
+    machine.generate_pdf(
+        year=2023,
+        month=3
+    )
 
 
     
