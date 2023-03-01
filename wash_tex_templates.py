@@ -4,7 +4,8 @@ FRONT = r"""
 
 \documentclass[11pt, a4paper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[top=0.7 in,bottom=1in, left=0.4 in, right=1 in]{geometry}
+\usepackage[margin=0.4in]{geometry}
+\usepackage{diagbox} # For diagonal line inside table
 
 \usepackage{hyperref}
 \hypersetup{
@@ -35,7 +36,7 @@ FRONT = r"""
 	\multicolumn{5}{|c|}{\textbf{\Large Washing Machine {\it \large{(BOSCH)}} Slots}} \\
 	\hline
 	
-	\textbf{Date} & \textbf{07:00-10:30} & \textbf{11:30-15:00} & \textbf{16:00-19:30} & \textbf{20:30-00:00} \\
+	\diagbox[width=3.7cm]{\textbf{Date}}{\textbf{Slot}} & \textbf{07:00-10:30} & \textbf{11:30-15:00} & \textbf{16:00-19:30} & \textbf{20:30-00:00} \\
 	\hline
 
 """
