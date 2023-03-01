@@ -36,7 +36,7 @@ FRONT = r"""
 	\multicolumn{5}{|c|}{\textbf{\Large Washing Machine {\it \large{(BOSCH)}} Slots}} \\
 	\hline
 	
-	\diagbox[width=3.7cm]{\textbf{Date}}{\textbf{Slot}} & \textbf{07:00-10:30} & \textbf{11:30-15:00} & \textbf{16:00-19:30} & \textbf{20:30-00:00} \\
+	\diagbox[width=3.7cm, height=1cm]{\textbf{Date}}{\textbf{Slot}} & \textbf{07:00-10:30} & \textbf{11:30-15:00} & \textbf{16:00-19:30} & \textbf{20:30-00:00} \\
 	\hline
 
 """
