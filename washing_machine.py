@@ -3,6 +3,7 @@
 # Author: Indrajit Ghosh
 #
 # Created on: Dec 19, 2022
+# Modified on: Mar 01, 2023
 #
 
 from datetime import datetime, timedelta
@@ -635,7 +636,7 @@ def main():
     machine_name = "rs-hostel-bosch-machine"
     machine = WashingMachine.load(DATABASE_DIR / (machine_name + ".json"))
     machine.clear_history()
-    
+
     pprint(machine.slots)
 
     current_year = datetime.now().year
