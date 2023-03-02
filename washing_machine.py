@@ -341,9 +341,9 @@ class WashingMachine:
         """
         This function creates `main.tex` for washing machine for a given month and year
         """
-        # TODO: if self._slots(year, month) is `None` then add default blank slots to `self`
+        # If self._slots(year, month) is `None` then add blank slots to `self`
         if not self._get_slots(month=month, year=year):
-            raise Exception("No slots")
+            self.add_blank_slots(month=month, year=year)
             
         desktop = Path.home() / "Desktop/"
         tex_filename = "wash_slot_" + datetime(year, month, 1).strftime('%b_%y') + ".tex"
@@ -629,18 +629,22 @@ class WashTeX:
 
 
 def main():
-    # print('class: WashingMachine')
-    # machine = WashingMachine.load(DATABASE_DIR / "rs_hostel.json")
+    print('class: WashingMachine')
 
     # Creating machine
-    machine = WashingMachine.load(DATABASE_DIR / "RS-hostel-bosch-machine.json")
-    machine.book_recurring_slot(month=4, year=2023, choice=(6, 1, "Indrajit (RF-8)"))
+    machine_name = "rs-hostel-bosch-machine"
+    machine = WashingMachine.load(DATABASE_DIR / (machine_name + ".json"))
+    machine.clear_history()
+    
     pprint(machine.slots)
 
-    machine.generate_pdf(
-        year=2023,
-        month=4
-    )
+    current_year = datetime.now().year
+    # machine.generate_pdf(
+    #     year=current_year,
+    #     month=5
+    # )
+
+    machine.save(machine_name)
     
 
 
