@@ -3,100 +3,32 @@
 #
 # Author: Indrajit Ghosh
 #
-# Created On: Jan 23, 2022
-# Modified On: Dec 19, 2022
+# Created on: Mar 02, 2023
 #
 
-INDRAJIT = r"\textit{Indrajit (RF-8)}"
-INDRAJITS_CHOICE = 6 # Sunday
+##################### Define your choice ##############################
 
-SNEHA = r"\textit{Sneha (RF-7)}"
+INDRAJIT = (6, 1, "Indrajit (RF-8)") # (Sunday, 1st-slot, entry-text)
+SNEHA = (6, 2, "Sneha (RF-7)")
+
+############## Add your choice to the following list ##################
+
+CHOICES = [INDRAJIT, SNEHA]
+
+#######################################################################
 
 
-from datetime import datetime, timedelta
-from wash_tex_templates import FRONT, BACK, DIAGBOX_STY
-from pathlib import Path
-import os, sys
+from washing_machine import WashingMachine
+from datetime import datetime
+import sys, os
 
-HOME = Path.home()
-DESKTOP = HOME / 'Desktop/'
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def iter_days(year, month):
-    dt = datetime(year, month, 1)
-    while dt.year == year and dt.month == month:
-        yield dt
-        dt += timedelta(days=1)
-
-
-def get_table_text(year, month):
-
-    s = ''
-
-    for dt in iter_days(year, month):
-        date = dt.strftime(f'%b %-d, {year}')
-
-        # Monday = 0, ..., Sunday = 6
-        if dt.weekday() == INDRAJITS_CHOICE:
-            # Indrajit's slot
-            text = date + "&" + INDRAJIT +  "&" + "" + r" & & \\" + "\n" + r"\hline" + "\n"
-
-        else:
-            text = date + r" & & & & \\" + "\n" + r"\hline" + "\n"
-            
-        s += text
-
-    return s
-
-
-def create_slots_tex(year, month, dir, filename):
-
-    with open(dir / filename, 'w') as f:
-        f.write(FRONT)
-
-        f.write(get_table_text(year, month))
-
-        f.write(BACK)
-
-
-def create_diagbox_sty_file(dir:Path):
-    """
-    This function writes `DIAGBOX_STY` into a file `dir/diagbox.sty`
-
-    Parameter:
-    ----------
-        `dir`: Path; the directory into which `diagbox.sty` will be created
-    """
-    with open(dir / 'diagbox.sty', 'w') as f:
-        f.write(DIAGBOX_STY)
-
-
-def generate_slots(year:int, month:int):
-
-    tex_filename = "wash_slot_" + datetime(year, month, 1).strftime('%b_%y') + ".tex"
-
-    output_dir = DESKTOP / f"wash_slots_{datetime(year, month, 1).strftime('%b_%y')}"
-    try:
-        os.makedirs(output_dir)
-        print("\n - TeX directory created.")
-
-        create_slots_tex(year, month, output_dir, tex_filename)
-        print(" - Main tex file has been written.")
-
-        create_diagbox_sty_file(dir=output_dir) # creating `diagbox.sty`
-
-        os.chdir(output_dir)
-        os.system(f"pdflatex {tex_filename} > {os.devnull}")
-        print(f"\n - The `pdf` has been created inside: ```{output_dir}```\n")
-
-    except FileExistsError:
-        print(f"There is already a directory with the name ``{output_dir.name}``. Delete that directory first and try again later!")
-
 
 def main():
-
+    
     y = None
     m = None
 
@@ -112,7 +44,7 @@ def main():
         if '-y' in sys.argv:
             y = int(sys.argv[sys.argv.index('-y') + 1])
 
-    # Check if month is given or not. If not print USAGE
+    
     USAGE = f"""
     WashingMachineSlots 
     ---------------------
@@ -136,6 +68,7 @@ def main():
 
     """
 
+    # Check if month is given or not. If not print USAGE
     if m is None:
         print(USAGE)
         sys.exit()
@@ -144,7 +77,15 @@ def main():
         
         clear_screen()
         print(USAGE)
-        generate_slots(year=y, month=m)
+
+        machine = WashingMachine()
+        for c in CHOICES:
+            machine.book_recurring_slot(month=m, year=y, choice=c)
+        
+        machine.generate_pdf(
+            year=y,
+            month=m
+        )
 
 
 if __name__ == '__main__':
