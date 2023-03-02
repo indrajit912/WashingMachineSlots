@@ -30,9 +30,10 @@ class WashingMachine:
         `name`: `str`
         `timings`: `dict`; 
                     defaults to {
-                                    1: "7:00am-11:00am",
-                                    2: "2:00pm-6:00pm",
-                                    3: "9:00pm-1:00am"
+                                    1: "07:00-10:30",
+                                    2: "11:30-15:00",
+                                    3: "16:00-19:30",
+                                    4: "20:30-00:00"
                                 }
 
         `slots`: `dict`
@@ -129,11 +130,13 @@ class WashingMachine:
         """
         Book a slot on the given day-month and year
         """
-        year = datetime.now().year if year is None else year
+        now = datetime.now()
+        year = now.year if year is None else year
         booking_dt = datetime(day=day, month=month, year=year)
+        
 
-        if booking_dt < datetime.today():
-            raise Exception("You cannot book slots in the past!")
+        if booking_dt < datetime(day=now.day, month=now.month, year=now.year):
+            raise Exception(f"You cannot book slots in the past date: {booking_dt.date()}!")
 
         day -= 1
         key = f"{month}-{year}"
@@ -244,6 +247,7 @@ class WashingMachine:
         first_col_heading_2 = WashTeX.default_first_col_heading_2 if first_col_heading_2 is None else first_col_heading_2
         first_col_width = WashTeX.default_first_col_width if first_col_width is None else first_col_width
         col_width = WashTeX.default_col_width if col_width is None else col_width
+        max_cell_text_width = float(col_width[:-2]) * 6 # Assuming 5 char per cm
         diagbox_height = WashTeX.default_diagbox_height if diagbox_height is None else diagbox_height
         diagbox_width = WashTeX.default_diagbox_width if diagbox_width is None else diagbox_width
 
@@ -258,7 +262,6 @@ class WashingMachine:
 
 
         """
-        col_head_str = r"|p{" + col_width + r"}"
 
         main_tex_str += fr"""
 \begin{{tabular}}{{ |p{{{first_col_width}}}|p{{{col_width}}}|p{{{col_width}}}|p{{{col_width}}}|p{{{col_width}}}|  }}
@@ -281,7 +284,7 @@ class WashingMachine:
             for cell_val in slot_row:
                 if cell_val:
                     cell_text_lst.append(
-                        fr"& \textit{{{cell_val}}}"
+                        fr"& \mbox{{\textit{{{cell_val[:int(max_cell_text_width)]}}}}}"
                     )
                 else:
                     cell_text_lst.append(
@@ -605,17 +608,22 @@ class WashTeX:
 def main():
     # print('class: WashingMachine')
     # machine = WashingMachine.load(DATABASE_DIR / "rs_hostel.json")
+
+    # Creating machine
     machine = WashingMachine(name="New Machine")
     machine.add_blank_slots(month=3)
+
+    # Booking slots
     machine.book_slot(day=5, month=3, timing=1, entry="Indrajit (RF-8)")
+    machine.book_slot(day=7, month=3, timing=3, entry="Sneha (RF-7)")
+    machine.book_slot(day=25, month=3, timing=2, entry="NageshwaramaY (RS-2)")
+
     pprint(machine.slots)
 
     machine.generate_pdf(
         year=2023,
-        month=4
+        month=3
     )
-
-
     
 
 
