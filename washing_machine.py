@@ -14,6 +14,8 @@ from pprint import pprint
 
 DATABASE_DIR = Path(__file__).parent.resolve() / "database"
 
+# TODO: Create a function to generate `html` of the slots
+
 
 __all__ = ["WashingMachine"]
 
