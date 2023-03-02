@@ -150,6 +150,29 @@ class WashingMachine:
         else:
             self._slots[key][day][timing - 1] = True if entry is None else entry
             return True
+        
+    def book_recurring_slot(self, month:int, year:int, choice:tuple):
+          """
+          This function book a preferred slot in a recurring manner.
+          If any slot is booked already then skip that.
+
+          Parameter(s):
+          -------------
+            `month`: `int`
+            `year`: `int`
+            `choice`: `tuple`; (weekday_choice, timing_choice, entry) 
+          
+          Note: 
+          -----
+            0 : Monday, 1 : Tuesday, ... , 6 : Sunday
+            - (0, 2, "Indrajit (RF-8)") represents (Monday, 2nd slot, "Indrajit (RF-8)")
+            - (1, 1, "Sneha (RF-7)") represents (Tuesday, 1st slot, "Sneha (RF-7)")
+          """
+
+          for dt in self.iter_days(year=year, month=month):
+                if dt.weekday() == choice[0]: # weekday matched
+                    self.book_slot(day=dt.day, month=month, timing=choice[1], year=year, entry=choice[2])
+
     
 
     def vacant_slot(self, day:int, month:int, timing:int, year:int=None):
@@ -197,7 +220,7 @@ class WashingMachine:
             "timings": self.timings
         }
 
-    def save(self, title:Path=None):
+    def save(self, title:str=None):
         """
         Saves `self.serialize()` into the file
         """
@@ -610,19 +633,13 @@ def main():
     # machine = WashingMachine.load(DATABASE_DIR / "rs_hostel.json")
 
     # Creating machine
-    machine = WashingMachine(name="New Machine")
-    machine.add_blank_slots(month=3)
-
-    # Booking slots
-    machine.book_slot(day=5, month=3, timing=1, entry="Indrajit (RF-8)")
-    machine.book_slot(day=7, month=3, timing=3, entry="Sneha (RF-7)")
-    machine.book_slot(day=25, month=3, timing=2, entry="NageshwaramaY (RS-2)")
-
+    machine = WashingMachine.load(DATABASE_DIR / "RS-hostel-bosch-machine.json")
+    machine.book_recurring_slot(month=4, year=2023, choice=(6, 1, "Indrajit (RF-8)"))
     pprint(machine.slots)
 
     machine.generate_pdf(
         year=2023,
-        month=3
+        month=4
     )
     
 
