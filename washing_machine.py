@@ -288,12 +288,13 @@ class WashingMachine:
 
 
         """
+        pcol = '|'.join([fr"p{{{col_width}}}" for _ in self.timings])
 
         main_tex_str += fr"""
-\begin{{tabular}}{{ |p{{{first_col_width}}}|p{{{col_width}}}|p{{{col_width}}}|p{{{col_width}}}|p{{{col_width}}}|  }}
+\begin{{tabular}}{{ |p{{{first_col_width}}}|{pcol}|  }}
     \hline
 	
-	\multicolumn{{5}}{{|c|}}{{\textbf{{ {table_title} }} }} \\
+	\multicolumn{{{len(self.timings) + 1}}}{{|c|}}{{\textbf{{ {table_title} }} }} \\
 	\hline
         """
 
@@ -311,14 +312,14 @@ class WashingMachine:
                 if cell_val:
                     cell_val = "Occupied" if isinstance(cell_val, bool) else cell_val[:int(max_cell_text_width)]
                     cell_text_lst.append(
-                        fr"& \mbox{{\textit{{{cell_val}}}}}"
+                        fr"\mbox{{\textit{{{cell_val}}}}}"
                     )
                 else:
                     cell_text_lst.append(
-                        fr"&  "
+                        r""
                     )
 
-            slot_str += date + "".join(cell_text_lst) + r"\\" + "\n" + "\hline" + "\n\n"
+            slot_str += date + r"& " + r"& ".join(cell_text_lst) + r"\\" + "\n" + "\hline" + "\n\n"
 
         main_tex_str += slot_str
 
