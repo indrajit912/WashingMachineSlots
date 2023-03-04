@@ -309,8 +309,9 @@ class WashingMachine:
             cell_text_lst = []
             for cell_val in slot_row:
                 if cell_val:
+                    cell_val = "Occupied" if isinstance(cell_val, bool) else cell_val[:int(max_cell_text_width)]
                     cell_text_lst.append(
-                        fr"& \mbox{{\textit{{{cell_val[:int(max_cell_text_width)]}}}}}"
+                        fr"& \mbox{{\textit{{{cell_val}}}}}"
                     )
                 else:
                     cell_text_lst.append(
