@@ -13,7 +13,7 @@ SNEHA = (6, 2, "Sneha (RF-7)")
 
 ############## Add your choice to the following list ##################
 
-CHOICES = [INDRAJIT, SNEHA]
+CHOICES = [INDRAJIT]
 
 #######################################################################
 
