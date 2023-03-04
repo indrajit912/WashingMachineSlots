@@ -9,7 +9,7 @@
 from datetime import datetime, timedelta
 from calendar import monthrange
 from pathlib import Path
-import json, os
+import json, os, shutil, sys
 from pprint import pprint
 
 DATABASE_DIR = Path(__file__).parent.resolve() / "database"
@@ -345,7 +345,15 @@ class WashingMachine:
     ):
         """
         This function creates `main.tex` for washing machine for a given month and year
+        Note: this function uses `pdflatex` to generate the pdf. So to use this feature
+        a LaTeX distribution should be installed on the system.
         """
+        # Check whether `pdflatex` is installed or not
+        if shutil.which('pdflatex') is None:
+            texerr = """\n\nLaTeX ERROR:: This feature requires LaTeX to be installed in the system.\n Kindly install a LaTeX distribution."""
+            print(texerr)
+            sys.exit()
+        
         # If self._slots(year, month) is `None` then add blank slots to `self`
         if not self._get_slots(month=month, year=year):
             self.add_blank_slots(month=month, year=year)
