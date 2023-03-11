@@ -415,7 +415,7 @@ class WashTeX:
 
 \documentclass[11pt, a4paper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[margin=0.4in]{geometry}
+\usepackage[left=0.4in, right=0.4in, top=0.6in, bottom=0.4in]{geometry}
 \usepackage{diagbox} % For diagonal line inside table
 
 \usepackage{hyperref}
