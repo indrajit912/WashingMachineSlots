@@ -2,8 +2,8 @@
 # a washing machine slots table.
 #
 # Author: Indrajit Ghosh
-#
-# Created on: Mar 02, 2023
+# Created On: Jan 23, 2022
+# Modified On: Dec 19, 2022; Mar 02, 2023
 #
 
 ##################### Define your choice ##############################
