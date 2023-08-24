@@ -56,7 +56,7 @@ Before running the script, you can customize your preferred slots by modifying t
 ## Dependencies
 
 - Python 3.x
-- LaTeX (pdflatex)
+- LaTeX (pdflatex). To install and setup a LaTeX distribution see my guide [here](https://github.com/indrajit912/HowTo/blob/cec45debd154246d029396e9f151d9407f7e5567/guides/install_latex.md).
 
 ## License
 
