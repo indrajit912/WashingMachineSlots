@@ -2,6 +2,10 @@
 
 This Python project provides a convenient way to manage and generate washing machine slots for a specified month and year. The project consists of a `WashingMachine` class and a `main.py` script that utilizes the class to create a PDF representation of the washing machine slots.
 
+**Author**: [Indrajit Ghosh](https://github.com/indrajit912)
+
+**Project URL**: [WashingMachineSlots](https://github.com/indrajit912/WashingMachineSlots)
+
 ## `WashingMachine` Class
 
 ### Description
@@ -56,7 +60,7 @@ Before running the script, you can customize your preferred slots by modifying t
 ## Dependencies
 
 - Python 3.x
-- LaTeX (pdflatex). For detailed instructions on installing LaTeX, you can refer to the [LaTeX Installation Guide](https://github.com/indrajit912/HowTo/blob/cec45debd154246d029396e9f151d9407f7e5567/guides/install_latex.md) created by Indrajit Ghosh.
+- LaTeX (pdflatex). For detailed instructions on installing LaTeX, you can refer to the [LaTeX Installation Guide](https://github.com/indrajit912/HowTo/blob/cec45debd154246d029396e9f151d9407f7e5567/guides/install_latex.md) created by [Indrajit Ghosh](https://github.com/indrajit912).
 
 ## License
 
