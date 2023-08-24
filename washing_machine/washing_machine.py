@@ -117,9 +117,6 @@ class WashingMachine:
     def add_blank_slots(self, month:int, year:int=None):
         """
         This method retunrs a blank slot
-        Returns:
-        --------
-            `np.ndarray`
         """
         year = datetime.now().year if year is None else year
         num_of_days = monthrange(year, month)[1] # (week_day_of_first_day, number_of_days)
@@ -129,21 +126,43 @@ class WashingMachine:
         self._slots[key] = [[False for _ in range(cols)] for _ in range(rows)]
 
 
-    def book_slot(self, day:int, month:int, timing:int, year:int=None, entry:str=None):
+    def book_slot(self, day: int, month: int, timing: int, year: int = None, entry: str = None):
         """
-        Book a slot on the given day-month and year
+        Book a slot on the given day, month, and year.
+
+        Parameters:
+        -----------
+        day : int
+            The day of the month to book the slot.
+        month : int
+            The month in which the slot is to be booked.
+        timing : int
+            The slot timing to be booked (1, 2, 3, 4).
+        year : int, optional
+            The year in which the slot is to be booked. If not provided, the current year is used.
+        entry : str, optional
+            An optional entry to associate with the booked slot.
+
+        Returns:
+        --------
+        bool
+            True if the slot was successfully booked, False if the slot was already occupied.
+
+        Raises:
+        -------
+        Exception
+            If the booking date is in the past.
+
         """
         now = datetime.now()
         year = now.year if year is None else year
         booking_dt = datetime(day=day, month=month, year=year)
-        
 
         if booking_dt < datetime(day=now.day, month=now.month, year=now.year):
             raise Exception(f"You cannot book slots in the past date: {booking_dt.date()}!")
 
         day -= 1
         key = f"{month}-{year}"
-
 
         if self._get_slots(month, year) is None:
             self.add_blank_slots(month, year)
@@ -153,6 +172,7 @@ class WashingMachine:
         else:
             self._slots[key][day][timing - 1] = True if entry is None else entry
             return True
+
         
     def book_recurring_slot(self, month:int, year:int, choice:tuple):
           """
@@ -331,33 +351,32 @@ class WashingMachine:
         return main_tex_str
     
 
-    def generate_pdf(
-            self, 
-            year:int, 
-            month:int,
-            table_title:str=None,
-            first_col_heading_1:str=None,
-            first_col_heading_2:str=None,
-            first_col_width:str=None,
-            col_width:str=None,
-            diagbox_width:str=None,
-            diagbox_height:str=None
-    ):
+    def generate_pdf(self, year, month, table_title=None, first_col_heading_1=None, first_col_heading_2=None,
+                     first_col_width=None, col_width=None, diagbox_width=None, diagbox_height=None):
         """
-        This function creates `main.tex` for washing machine for a given month and year
-        Note: this function uses `pdflatex` to generate the pdf. So to use this feature
-        a LaTeX distribution should be installed on the system.
+        Generate a PDF representation of the washing machine's slots for the specified month and year.
+
+        Args:
+            year (int): The year for which to generate the PDF.
+            month (int): The month for which to generate the PDF.
+            table_title (str, optional): Title for the table. Defaults to None.
+            first_col_heading_1 (str, optional): Heading for the first column (top-left cell). Defaults to None.
+            first_col_heading_2 (str, optional): Heading for the second column (top-left cell). Defaults to None.
+            first_col_width (str, optional): Width of the first column. Defaults to None.
+            col_width (str, optional): Width of the remaining columns. Defaults to None.
+            diagbox_width (str, optional): Width of the diagonal box cell. Defaults to None.
+            diagbox_height (str, optional): Height of the diagonal box cell. Defaults to None.
         """
         # Check whether `pdflatex` is installed or not
         if shutil.which('pdflatex') is None:
             texerr = """\n\nLaTeX ERROR:: This feature requires LaTeX to be installed in the system.\n Kindly install a LaTeX distribution."""
             print(texerr)
             sys.exit()
-        
+
         # If self._slots(year, month) is `None` then add blank slots to `self`
         if not self._get_slots(month=month, year=year):
             self.add_blank_slots(month=month, year=year)
-            
+
         desktop = Path.home() / "Desktop/"
         tex_filename = "wash_slot_" + datetime(year, month, 1).strftime('%b_%y') + ".tex"
         output_dir = desktop / f"wash_slots_{datetime(year, month, 1).strftime('%b_%y')}"
@@ -370,15 +389,15 @@ class WashingMachine:
             with open(output_dir / tex_filename, 'w') as f:
                 f.write(
                     self._get_main_tex(
-                    year=year,
-                    month=month,
-                    table_title=table_title,
-                    first_col_heading_1=first_col_heading_1,
-                    first_col_heading_2=first_col_heading_2,
-                    first_col_width=first_col_width,
-                    col_width=col_width,
-                    diagbox_width=diagbox_width,
-                    diagbox_height=diagbox_height
+                        year=year,
+                        month=month,
+                        table_title=table_title,
+                        first_col_heading_1=first_col_heading_1,
+                        first_col_heading_2=first_col_heading_2,
+                        first_col_width=first_col_width,
+                        col_width=col_width,
+                        diagbox_width=diagbox_width,
+                        diagbox_height=diagbox_height
                     )
                 )
             print(" - Main tex file has been written.")
