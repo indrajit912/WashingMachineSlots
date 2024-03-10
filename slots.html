@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<style>
+		table {
+			border-collapse: collapse;
+			background: white;
+			color: black;
+			width: 35cm;
+		}
+		
+		th,
+		td {
+			font-weight: bold;
+		}
+		.background {
+		  width: 100px;
+		  height: 50px;
+		  padding: 0;
+		  margin: 0;
+		}
+
+		.line {
+		  width: 112px;
+		  height: 47px;
+		  border-bottom: 1px solid rgb(233, 226, 226);
+		  transform: translateY(-20px) translateX(5px) rotate(27deg);
+		  position: absolute;
+		  z-index: -1;
+		}
+
+		.background>div {
+		  position: relative;
+		  height: 100%;
+		  width: 100%;
+		  top: 0;
+		  left: 0;
+		}
+		.bottom {
+			position: absolute;
+			bottom: 1px;
+			left: 1px;
+		  }
+
+		.top {
+			position: absolute;
+			top: 1px;
+			right: 1px;
+		  }
+	</style>
+	
+</head>
+
+
+
+<body>
+	<!-- Here we are using attributes like
+		cellspacing and cellpadding -->
+
+	<!-- The purpose of the cellpadding is
+		the space that a user want between
+		the border of cell and its contents-->
+
+	<!-- cellspacing is used to specify the
+		space between the cell and its contents -->
+	<h2 align="center" style="color: orange;">
+		Washing Machine Slots
+	</h2>
+	<br />
+
+	<table bgcolor="lightgrey" align="center"
+		cellspacing="21" cellpadding="21">
+
+		<!-- The tr tag is used to enter
+			rows in the table -->
+
+		<!-- It is used to give the heading to the
+			table. We can give the heading to the
+			top and bottom of the table -->
+
+		<caption align="top">
+			<!-- Here we have used the attribute
+				that is style and we have colored
+				the sentence to make it better
+				depending on the web page-->
+		</caption>
+
+		<!-- Here th stands for the heading of the
+			table that comes in the first row-->
+
+		<!-- The text in this table header tag will
+			appear as bold and is center aligned-->
+
+		<thead>
+			<tr>
+				<!-- Here we have applied inline style
+					to make it more attractive-->
+				<th class="background", style="color: white; background: purple; width: 3.4cm; font-family: 'Courier New', Courier, monospace;">
+					<div><span class="bottom">Date</span>
+						<span class="top">Slot</span>
+						<div class="line"></div>
+					</th>
+				<th style="color: white; background: purple; width: 3.4cm;">
+					07:00-10:30</th>
+				<th style="color: white; background: purple;">
+					11:30-15:30</th>
+				<th style="color: white; background: purple;">
+					20:00-23:00</th>
+				<th style="color: white; background: purple;">
+					23:00-00:00</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr>
+				<td>Mar 14, 2023</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+				<td>7</td>
+			</tr>
+			<tr>
+				<td>Mar 5, 2023</td>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+				<td>4</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+
+</html>
+
