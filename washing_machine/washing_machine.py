@@ -419,7 +419,7 @@ class WashTeX:
     """
     A class containing various TeX constants for generating a washing machine slots.
     """
-    default_table_title = r"Washing Machine {\it \large{(BOSCH)}} Slots"
+    default_table_title = r"Washing Machine Slots"
     default_first_col_width = "2.3cm"
     default_col_width = "2.6cm"
     default_diagbox_width = "3.5cm"

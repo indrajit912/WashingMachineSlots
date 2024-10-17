@@ -83,7 +83,8 @@ def main():
         
         machine.generate_pdf(
             year=y,
-            month=m
+            month=m,
+            table_title="RS Hostel Washing Machine Slots"
         )
 
 
